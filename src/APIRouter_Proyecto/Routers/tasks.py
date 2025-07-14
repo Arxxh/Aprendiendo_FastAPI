@@ -55,7 +55,7 @@ async def lista_by_id(task_id: int):
 
 @router.put("/actualizar/{task_id}", response_model=Task)
 async def actualizar_lista(task_id:int, updated_task:Task):
-    for idx, task_item in task_item:
+    for task_item in task_item:
         if task_item["id"] == task_id:
             task_item["title"] = updated_task.title
             task_item["description"] = updated_task.description

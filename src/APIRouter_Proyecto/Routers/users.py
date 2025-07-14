@@ -47,3 +47,20 @@ async def usuario_por_id(user_id:int):
         if user_item["id"] == user_id:
             return user_item
     raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+@router.put("/actualizar_usuario/{user_id}", summary="Actualizar usuario", response_model=User)
+async def actualizar_usuario(user_id:int ,updated_user:User):
+    for user_item in user_db:
+        if user_item["id"] == user_id:
+            user_item["name"] = updated_user.name
+            user_item["email"] = updated_user.email
+            user_item["age"] = updated_user.age
+            return user_item
+    raise HTTPException(status_code=404, detail="Tarea no encontrada")
+
+@router.delete("/borrar_usuario/{user_id}", summary="Borrar usuario", response_model=DeleteResponse)
+async def borrar_usuario(user_id:int):
+    for idx, user_item in enumerate(user_db):
+        if user_item["id"] == user_id:
+            deleted = user_db.pop(idx)
+    return {"mensaje":"usuario borrado", "usuario":User(**deleted)}
