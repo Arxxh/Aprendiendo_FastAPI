@@ -1,6 +1,8 @@
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional
+from security.auth import verificar_token
+
 
 router = APIRouter(
     prefix="/books",
@@ -33,9 +35,9 @@ async def crear_libro(book:Book):
     next_id_books += 1
     return book_dict
 
-@router.get("/", summary="mostrar libros")
+@router.get("/", summary="mostrar libros", dependencies=[Depends(verificar_token)]) # agregando dependencia
 async def ver_libros():
-    return books_db
+    return {"mensaje":"Acceso autorizado, datos protegidos"}, books_db
 
 @router.get("/{libro_id}", summary="ver libro por id", response_model=Book)
 async def libro_por_id(libro_id:int):
