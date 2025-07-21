@@ -1,5 +1,5 @@
 from fastapi import APIRouter, status, HTTPException, Depends
-from pydantic import BaseModel
+from Routers.models.models import Book, DeleteResponse
 from typing import Optional
 
 
@@ -10,18 +10,6 @@ router = APIRouter(
 
 books_db: list[dict] = []
 next_id_books = 1
-
-
-class Book(BaseModel):
-    id: Optional[int] = None
-    title: str
-    author: str
-    year: int
-    available: Optional[bool] = True # por que true y no None si no lo sabemos?
-
-class DeleteResponse(BaseModel):
-    mensaje: str
-    book: Book
 
 # crear un libro
 @router.post("/", summary="crear un libro",
