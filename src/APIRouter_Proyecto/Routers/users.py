@@ -1,5 +1,5 @@
 from fastapi import HTTPException, status, APIRouter
-from pydantic import BaseModel
+from Routers.models.models import User, DeleteResponse
 from typing import Optional
 
 router = APIRouter(
@@ -10,18 +10,6 @@ router = APIRouter(
 # simulacion de db (lista vacia)
 user_db:list[dict] = []
 next_user_id = 1 # var para llevar la contabilidad de los id en una lista
-
-class User(BaseModel):
-    id: Optional[int] = None
-    name: str
-    email: str
-    age: Optional[int] = None
-
-
-# regrese un modelo response_model = "DeleteResponse"
-class DeleteResponse(BaseModel):
-    mensaje : str
-    usuario : User
 
 @router.post("/", summary="Crear un usuario", response_model=User, 
             response_description="Modelo User",
