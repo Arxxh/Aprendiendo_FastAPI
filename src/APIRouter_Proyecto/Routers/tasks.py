@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from Routers.models.models import Task, DeleteResponse
 from typing import Optional
 from fastapi import HTTPException, status, APIRouter
 
@@ -15,17 +15,6 @@ router = APIRouter(
 tasks_db:list[dict] = []
 next_task_id = 1 # var para llevar la contabilidad de los id en una lista
 
-# creamos objeto Task
-class Task(BaseModel):
-    id: Optional[int] = None
-    title: str
-    description: Optional[str] = None
-    completed: bool = False
-
-# regrese un modelo response_model = "DeleteResponse"
-class DeleteResponse(BaseModel):
-    mensaje: str
-    task: Task
 
 # dado a que es una agrupacion se llama router en ves de app
 @router.post("/crear_tarea", 
