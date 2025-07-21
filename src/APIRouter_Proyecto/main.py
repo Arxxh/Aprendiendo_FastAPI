@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from Routers import tasks, users, books
+from security.login import router as login
+from security.register import router as register
 
 app = FastAPI(
     title="Mi_Api_Routers",
@@ -12,3 +14,13 @@ app = FastAPI(
 app.include_router(tasks.router)
 app.include_router(users.router)
 app.include_router(books.router)
+
+
+
+"""
+AUTHENTICATION
+"""
+# conexion con login
+app.include_router(login) #login
+# conexion con register
+app.include_router(register) #Register
